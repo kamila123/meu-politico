@@ -1,0 +1,24 @@
+#Install EGit Plugin 
+
+Eclipse Wizard to install new software Help => Install New Software. 
+Insert http://download.eclipse.org/egit/updates 
+Select Eclipse EGit 
+
+#Download Project
+
+Open Git Perspective clone from git repository https://github.com/kamila123/meu-politico.git
+Inside project press right click and Import Maven Project 
+
+#Run in docker
+
+$ docker ps
+$ docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t springio/gs-spring-boot-docker
+
+#Debug option
+$ docker run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n" -p 8080:8080 -p 5005:5005 -t springio/gs-spring-boot-docker
+
+#Create Maven Build
+
+install dockerfile:build
+install
+spring-boot:run

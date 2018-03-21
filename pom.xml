@@ -3,12 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.meupolitico</groupId>
 	<artifactId>meu-politico</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>meu-politico Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
-	
+
+	<properties>
+		<docker.image.prefix>springio</docker.image.prefix>
+	</properties>
 	<dependencies>
 
 		<!-- Rest -->
@@ -46,8 +48,8 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.3</version>
 		</dependency>
-		
-		<!-- HtmlUnit-->
+
+		<!-- HtmlUnit -->
 		<dependency>
 			<groupId>net.sourceforge.htmlunit</groupId>
 			<artifactId>htmlunit</artifactId>
@@ -109,6 +111,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- Servidores de aplicacao -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
@@ -141,10 +145,28 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<version>1.5.10.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Plugin Docker -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
+			<!-- Plugin Spring boot -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -155,6 +177,10 @@
 							<mainClass>com.meupolitico.Main</mainClass>
 						</manifest>
 					</archive>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
 				</configuration>
 				<executions>
 					<execution>
