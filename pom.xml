@@ -165,6 +165,7 @@
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
 					<baseImage>java</baseImage>
 					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<rm>true</rm>
 					<!-- copy the service's jar file from target into the root directory 
 						of the image -->
 					<resources>
